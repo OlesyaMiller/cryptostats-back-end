@@ -1,4 +1,4 @@
-export class CrateUserRequest {
+export class CreateUserRequestDto {
     email: string;
     password: string;
 }
