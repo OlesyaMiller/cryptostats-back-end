@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { CreateUserRequestDto } from './dto/request/create-user-request.dto';
+import { UserRequestDto } from './dto/request/user-request.dto';
 import { UsersRepository } from './users.repository';
 import { hash } from 'bcrypt';
 import { UserResponseDto } from './dto/response/user-response.dto';
@@ -9,17 +9,17 @@ import { User } from './models/User';
 export class UsersService {
     constructor(private readonly usersRepository: UsersRepository) {}
     
-    async createUser(createUserRequestDto: CreateUserRequestDto): Promise<UserResponseDto> {
-        await this.validateCreateUserRequest(createUserRequestDto);
+    async createUser(userRequestDto: UserRequestDto): Promise<UserResponseDto> {
+        await this.validateUserRequest(userRequestDto);
         const user = await this.usersRepository.insertOne({
-            ...createUserRequestDto,
-            password: await hash(createUserRequestDto.password, 10),
+            ...userRequestDto,
+            password: await hash(userRequestDto.password, 10),
         });
         return this.buildResponse(user)
     }
 
-    private async validateCreateUserRequest(createUserRequestDto: CreateUserRequestDto): Promise<void> {
-        const user = await this.usersRepository.findOnebyEmail(createUserRequestDto.email);
+    private async validateUserRequest(userRequestDto: UserRequestDto): Promise<void> {
+        const user = await this.usersRepository.findOnebyEmail(userRequestDto.email);
         if (user) {
             throw new BadRequestException('This email already exists.')
         }
