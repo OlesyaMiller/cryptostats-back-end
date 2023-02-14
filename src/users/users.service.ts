@@ -25,6 +25,13 @@ export class UsersService {
         }
     }
 
+    async validateUser(email: string, password: string): Promise<UserResponseDto> {
+        const user = await this.usersRepository.findOnebyEmail(email);
+        if(!user) {
+            throw new NotFoundException(`User does not exist by email: '${email}'.`);
+        }
+    }
+
     private buildResponse(user: User): UserResponseDto {
         return {
             _id: user._id.toHexString(),
