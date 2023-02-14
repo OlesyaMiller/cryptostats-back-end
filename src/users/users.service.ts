@@ -1,7 +1,7 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { UserRequestDto } from './dto/request/user-request.dto';
 import { UsersRepository } from './users.repository';
-import { hash } from 'bcrypt';
+import { hash, compare } from 'bcrypt';
 import { UserResponseDto } from './dto/response/user-response.dto';
 import { User } from './models/User';
 
@@ -30,7 +30,12 @@ export class UsersService {
         if(!user) {
             throw new NotFoundException(`User does not exist by email: '${email}'.`);
         }
-    }
+        const passwordIsValid = await compare(password, user.password);
+        if(!passwordIsValid) {
+            throw new UnauthorizedException('Credentials are invalid');
+        }
+        return this.buildResponse(user);
+    };
 
     private buildResponse(user: User): UserResponseDto {
         return {
