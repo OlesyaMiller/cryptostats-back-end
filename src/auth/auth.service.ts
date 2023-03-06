@@ -14,7 +14,7 @@ export class AuthService {
         private readonly jwtService: JwtService
     ) {}
 
-    async login(user: UserResponseDto, response: Response): Promise<void> {
+    async login(user: UserResponseDto, userResponseDto: UserResponseDto): Promise<void> {
         const tokenPayload: TokenPayload = {
             userId: user._id
         }
@@ -26,7 +26,7 @@ export class AuthService {
 
         const token = this.jwtService.sign(tokenPayload);
 
-        response.cookie('Authentication', token, {
+        userResponseDto.cookie('Authentication', token, {
             httpOnly: true,
             expires
         })
