@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { UserResponseDto } from 'src/users/dto/response/user-response.dto';
+import { Response } from 'express';
 
 interface TokenPayload {
     userId: string;
@@ -14,7 +15,7 @@ export class AuthService {
         private readonly jwtService: JwtService
     ) {}
 
-    async login(user: UserResponseDto, userResponseDto: UserResponseDto): Promise<void> {
+    async login(user: UserResponseDto, response: Response): Promise<void> {
         const tokenPayload: TokenPayload = {
             userId: user._id
         }
@@ -26,7 +27,7 @@ export class AuthService {
 
         const token = this.jwtService.sign(tokenPayload);
 
-        userResponseDto.cookie('Authentication', token, {
+        response.cookie('Authentication', token, {
             httpOnly: true,
             expires
         })

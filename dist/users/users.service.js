@@ -17,17 +17,29 @@ let UsersService = class UsersService {
     constructor(usersRepository) {
         this.usersRepository = usersRepository;
     }
-    async createUser(createUserRequestDto) {
-        await this.validateCreateUserRequest(createUserRequestDto);
-        const user = await this.usersRepository.insertOne(Object.assign(Object.assign({}, createUserRequestDto), { password: await (0, bcrypt_1.hash)(createUserRequestDto.password, 10) }));
+    async createUser(userRequestDto) {
+        await this.validateUserRequest(userRequestDto);
+        const user = await this.usersRepository.insertOne(Object.assign(Object.assign({}, userRequestDto), { password: await (0, bcrypt_1.hash)(userRequestDto.password, 10) }));
         return this.buildResponse(user);
     }
-    async validateCreateUserRequest(createUserRequestDto) {
-        const user = await this.usersRepository.findOnebyEmail(createUserRequestDto.email);
+    async validateUserRequest(userRequestDto) {
+        const user = await this.usersRepository.findOnebyEmail(userRequestDto.email);
         if (user) {
             throw new common_1.BadRequestException('This email already exists.');
         }
     }
+    async validateUser(email, password) {
+        const user = await this.usersRepository.findOnebyEmail(email);
+        if (!user) {
+            throw new common_1.NotFoundException(`User does not exist by email: '${email}'.`);
+        }
+        const passwordIsValid = await (0, bcrypt_1.compare)(password, user.password);
+        if (!passwordIsValid) {
+            throw new common_1.UnauthorizedException('Credentials are invalid');
+        }
+        return this.buildResponse(user);
+    }
+    ;
     buildResponse(user) {
         return {
             _id: user._id.toHexString(),

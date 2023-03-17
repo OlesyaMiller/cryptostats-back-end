@@ -8,31 +8,24 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UsersController = void 0;
+exports.LocalStrategy = void 0;
 const common_1 = require("@nestjs/common");
-const users_service_1 = require("./users.service");
-let UsersController = class UsersController {
+const passport_1 = require("@nestjs/passport");
+const passport_local_1 = require("passport-local");
+const users_service_1 = require("../../users/users.service");
+let LocalStrategy = class LocalStrategy extends (0, passport_1.PassportStrategy)(passport_local_1.Strategy) {
     constructor(usersService) {
+        super({ usernameField: 'email' });
         this.usersService = usersService;
     }
-    async createUser(userRequestDto) {
-        return this.usersService.createUser(userRequestDto);
+    async validate(email, password) {
+        return this.usersService.validateUser(email, password);
     }
 };
-__decorate([
-    (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], UsersController.prototype, "createUser", null);
-UsersController = __decorate([
-    (0, common_1.Controller)('users'),
+LocalStrategy = __decorate([
+    (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [users_service_1.UsersService])
-], UsersController);
-exports.UsersController = UsersController;
-//# sourceMappingURL=users.controller.js.map
+], LocalStrategy);
+exports.LocalStrategy = LocalStrategy;
+//# sourceMappingURL=local.strategy.js.map
