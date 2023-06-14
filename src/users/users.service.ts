@@ -10,7 +10,9 @@ export class UsersService {
     constructor(private readonly usersRepository: UsersRepository) {}
     
     async createUser(userRequestDto: UserRequestDto): Promise<UserResponseDto> {
-        await this.validateUserRequest(userRequestDto);
+
+        await this.validateCreateUserRequest(userRequestDto);
+
         const user = await this.usersRepository.insertOne({
             ...userRequestDto,
             password: await hash(userRequestDto.password, 10),
@@ -18,8 +20,12 @@ export class UsersService {
         return this.buildResponse(user)
     }
 
-    private async validateUserRequest(userRequestDto: UserRequestDto): Promise<void> {
-        const user = await this.usersRepository.findOnebyEmail(userRequestDto.email);
+    private async validateCreateUserRequest(userRequestDto: UserRequestDto): Promise<void> {
+
+        const user = await this.usersRepository.findOnebyEmail(
+            userRequestDto.email,
+        );
+
         if (user) {
             throw new BadRequestException('This email already exists.')
         }

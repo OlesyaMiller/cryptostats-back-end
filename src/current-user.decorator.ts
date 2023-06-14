@@ -1,4 +1,4 @@
-import { ExecutionContext, createParamDecorator }from '@nestjs/common';
+import { ExecutionContext, createParamDecorator } from '@nestjs/common';
 import { UserResponseDto } from './users/dto/response/user-response.dto';
 
 const getCurrentUserByContext = (context: ExecutionContext): UserResponseDto => {

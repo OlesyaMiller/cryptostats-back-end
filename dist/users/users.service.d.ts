@@ -5,7 +5,7 @@ export declare class UsersService {
     private readonly usersRepository;
     constructor(usersRepository: UsersRepository);
     createUser(userRequestDto: UserRequestDto): Promise<UserResponseDto>;
-    private validateUserRequest;
+    private validateCreateUserRequest;
     validateUser(email: string, password: string): Promise<UserResponseDto>;
     private buildResponse;
 }

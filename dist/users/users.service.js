@@ -18,11 +18,11 @@ let UsersService = class UsersService {
         this.usersRepository = usersRepository;
     }
     async createUser(userRequestDto) {
-        await this.validateUserRequest(userRequestDto);
+        await this.validateCreateUserRequest(userRequestDto);
         const user = await this.usersRepository.insertOne(Object.assign(Object.assign({}, userRequestDto), { password: await (0, bcrypt_1.hash)(userRequestDto.password, 10) }));
         return this.buildResponse(user);
     }
-    async validateUserRequest(userRequestDto) {
+    async validateCreateUserRequest(userRequestDto) {
         const user = await this.usersRepository.findOnebyEmail(userRequestDto.email);
         if (user) {
             throw new common_1.BadRequestException('This email already exists.');
