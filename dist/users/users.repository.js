@@ -28,6 +28,9 @@ let UsersRepository = class UsersRepository {
     async findOnebyEmail(email) {
         return this.user.findOne({ email });
     }
+    async findOneById(userId) {
+        return this.user.findById(userId);
+    }
 };
 UsersRepository = __decorate([
     (0, common_1.Injectable)(),

@@ -40,6 +40,13 @@ let UsersService = class UsersService {
         return this.buildResponse(user);
     }
     ;
+    async getUserById(userId) {
+        const user = await this.usersRepository.findOneById(userId);
+        if (!user) {
+            throw new common_1.NotFoundException(`User not found by _id: '${userId}'.`);
+        }
+        return this.buildResponse(user);
+    }
     buildResponse(user) {
         return {
             _id: user._id.toHexString(),

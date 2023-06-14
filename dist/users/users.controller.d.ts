@@ -5,4 +5,5 @@ export declare class UsersController {
     private readonly usersService;
     constructor(usersService: UsersService);
     createUser(userRequestDto: UserRequestDto): Promise<UserResponseDto>;
+    getUser(user: UserResponseDto): Promise<UserResponseDto>;
 }
