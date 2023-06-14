@@ -19,8 +19,8 @@ let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
     }
-    async createUser(createUserRequestDto) {
-        return this.usersService.createUser(createUserRequestDto);
+    async createUser(userRequestDto) {
+        return this.usersService.createUser(userRequestDto);
     }
 };
 __decorate([

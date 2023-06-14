@@ -21,7 +21,7 @@ UsersModule = __decorate([
             mongoose_1.MongooseModule.forFeature([{ name: User_1.User.name, schema: User_1.UserSchema }])
         ],
         controllers: [users_controller_1.UsersController],
-        providers: [users_service_1.UsersService, users_repository_1.UsersRepository]
+        providers: [users_service_1.UsersService, users_repository_1.UsersRepository],
     })
 ], UsersModule);
 exports.UsersModule = UsersModule;
