@@ -7,5 +7,6 @@ export declare class UsersService {
     createUser(userRequestDto: UserRequestDto): Promise<UserResponseDto>;
     private validateCreateUserRequest;
     validateUser(email: string, password: string): Promise<UserResponseDto>;
+    getUserById(userId: string): Promise<UserResponseDto>;
     private buildResponse;
 }
