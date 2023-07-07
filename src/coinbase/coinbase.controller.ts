@@ -1,6 +1,6 @@
 import { Controller, Get, Res, UseGuards } from "@nestjs/common";
 import { Response } from "@nestjs/common";
-import { JwtAuthGuard } from "../guards/jwt-auth.guard";
+import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 
 @Controller('coinbase')
 export class CoinbaseController {
