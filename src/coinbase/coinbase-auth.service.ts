@@ -25,6 +25,11 @@ export class CoinbaseAuthService {
     public handleCallback(req: Request, res: Response): void {
         const { code } = req.query;
         const { user } = req;
+        this.getTokensFromCode(
+            code as string,
+        ).subscribe(async tokensResponse => {
+            
+        })
     }
 
     private getTokensFromCode(code: string) {
