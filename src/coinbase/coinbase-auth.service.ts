@@ -1,10 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { Response } from "express";
 import { ConfigService } from "@nestjs/config";
+import { HttpService } from "@nestjs/axios";
 
 @Injectable()
 export class CoinbaseAuthService {
-    constructor(private readonly configService: ConfigService) {}
+    constructor(private readonly configService: ConfigService, private readonly httpService: HttpService) {}
 
     public authorize(res: Response): void {
         res.redirect(this.buildAuthorizeUrl().href);
@@ -20,4 +21,20 @@ export class CoinbaseAuthService {
 
         return authorizeUrl;
     }
+
+    public handleCallback(req: Request, res: Response): void {
+        const { code } = req.query;
+        const { user } = req;
+    }
+
+    private getTokensFromCode(code: string) {
+        return this.httpService.post('https://api.coinbase.com/token', {
+            grant_type: 'authorization_code',
+            code,
+            client_id: this.configService.get('COINBASE_CLIENT_ID'),
+            client_secret: this.configService.get('COINBASE_CLIENT_SECRET'),
+            redirect_uri: this.configService.get('COINBASE_REDIRECT_URI'),
+        });
+    }
+
 }
