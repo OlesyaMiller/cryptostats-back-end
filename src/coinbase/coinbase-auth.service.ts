@@ -3,7 +3,6 @@ import { Response } from "express";
 import { ConfigService } from "@nestjs/config";
 import { HttpService } from "@nestjs/axios";
 import { UsersService } from "src/users/users.service";
-import { User } from "src/users/models/User";
 import { EncryptionService } from "src/auth/encryption.service";
 import { UserResponseDto } from "src/users/dto/response/user-response.dto";
 
@@ -34,14 +33,13 @@ export class CoinbaseAuthService {
     public handleCallback(req: Request, res: Response): void {
         const { code } = req.query;
         const { user } = req;
-        this.getTokensFromCode(
-            code as string,
-        ).subscribe(async tokensResponse => {
+
+        this.getTokensFromCode(code as string).subscribe(async tokensResponse => {
             await this.updateUserCoinbaseAuth(
                 tokensResponse.data, 
                 ((user as unknown) as UserResponseDto )._id,
             );
-            
+            res.redirect(this.configService.get('AUTH_REDIRECT_URI'));
         });
     }
 
