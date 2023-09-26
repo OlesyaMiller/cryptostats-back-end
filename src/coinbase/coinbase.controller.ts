@@ -1,5 +1,5 @@
 import { Controller, Get, Res, Req, UseGuards } from "@nestjs/common";
-import { Response } from "@nestjs/common";
+import { Response, Request } from "@nestjs/common";
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { CoinbaseAuthService } from "./coinbase-auth.service";
 

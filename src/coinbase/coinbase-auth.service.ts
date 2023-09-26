@@ -3,6 +3,9 @@ import { Response } from "express";
 import { ConfigService } from "@nestjs/config";
 import { HttpService } from "@nestjs/axios";
 import { UsersService } from "src/users/users.service";
+import { User } from "src/users/models/User";
+import { EncryptionService } from "src/auth/encryption.service";
+import { UserResponseDto } from "src/users/dto/response/user-response.dto";
 
 @Injectable()
 export class CoinbaseAuthService {
@@ -10,6 +13,7 @@ export class CoinbaseAuthService {
         private readonly configService: ConfigService, 
         private readonly httpService: HttpService,
         private readonly usersService: UsersService,
+        private readonly encryptionService: EncryptionService
     ) {}
 
     public authorize(res: Response): void {
@@ -33,6 +37,10 @@ export class CoinbaseAuthService {
         this.getTokensFromCode(
             code as string,
         ).subscribe(async tokensResponse => {
+            await this.updateUserCoinbaseAuth(
+                tokensResponse.data, 
+                ((user as unknown) as UserResponseDto )._id,
+            );
             
         });
     }
@@ -47,14 +55,23 @@ export class CoinbaseAuthService {
         });
     }
 
-    private async updateUserCoinvaseAuth(tokenPayload: any, userId: string) {
+    private async updateUserCoinbaseAuth(tokenPayload: any, userId: string) {
         const {
             access_token: accessToken,
             refresh_token: refreshToken,
-            expoires_in: expiresIn
-        } = tokenPayload;
+            expires_in: expiresIn
+        } = tokenPayload;  // destructuring
+
         const expires = new Date();
         expires.setSeconds(expires.getSeconds() + expiresIn);
+
+        await this.usersService.updateUser(userId, {
+            coinbaseAuth: {
+                accessToken: this.encryptionService.encrypt(accessToken),
+                refreshToken: this.encryptionService.encrypt(refreshToken),
+                expires,
+            }
+        })
     }
 
 }
