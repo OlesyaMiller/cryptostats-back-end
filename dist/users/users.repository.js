@@ -25,6 +25,9 @@ let UsersRepository = class UsersRepository {
         const user = new this.user(data);
         return user.save();
     }
+    async updateOne(userId, data) {
+        return this.user.findByIdAndUpdate(userId, data, { new: true });
+    }
     async findOnebyEmail(email) {
         return this.user.findOne({ email });
     }

@@ -22,6 +22,13 @@ let UsersService = class UsersService {
         const user = await this.usersRepository.insertOne(Object.assign(Object.assign({}, userRequestDto), { password: await (0, bcrypt_1.hash)(userRequestDto.password, 10) }));
         return this.buildResponse(user);
     }
+    async updateUser(userId, data) {
+        const user = await this.usersRepository.updateOne(userId, data);
+        if (!user) {
+            throw new common_1.NotFoundException(`User not found by _id: '${userId}'.`);
+        }
+        return this.buildResponse(user);
+    }
     async validateCreateUserRequest(userRequestDto) {
         const user = await this.usersRepository.findOnebyEmail(userRequestDto.email);
         if (user) {

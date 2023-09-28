@@ -13,10 +13,14 @@ exports.CoinbaseAuthService = void 0;
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const axios_1 = require("@nestjs/axios");
+const users_service_1 = require("../users/users.service");
+const encryption_service_1 = require("../auth/encryption.service");
 let CoinbaseAuthService = class CoinbaseAuthService {
-    constructor(configService, httpService) {
+    constructor(configService, httpService, usersService, encryptionService) {
         this.configService = configService;
         this.httpService = httpService;
+        this.usersService = usersService;
+        this.encryptionService = encryptionService;
     }
     authorize(res) {
         res.redirect(this.buildAuthorizeUrl().href);
@@ -34,10 +38,12 @@ let CoinbaseAuthService = class CoinbaseAuthService {
         const { code } = req.query;
         const { user } = req;
         this.getTokensFromCode(code).subscribe(async (tokensResponse) => {
+            await this.updateUserCoinbaseAuth(tokensResponse.data, user._id);
+            res.redirect(this.configService.get('AUTH_REDIRECT_URI'));
         });
     }
     getTokensFromCode(code) {
-        return this.httpService.post('https://api.coinbase.com/token', {
+        return this.httpService.post('https://api.coinbase.com/oauth/token', {
             grant_type: 'authorization_code',
             code,
             client_id: this.configService.get('COINBASE_CLIENT_ID'),
@@ -45,10 +51,25 @@ let CoinbaseAuthService = class CoinbaseAuthService {
             redirect_uri: this.configService.get('COINBASE_REDIRECT_URI'),
         });
     }
+    async updateUserCoinbaseAuth(tokenPayload, userId) {
+        const { access_token: accessToken, refresh_token: refreshToken, expires_in: expiresIn } = tokenPayload;
+        const expires = new Date();
+        expires.setSeconds(expires.getSeconds() + expiresIn);
+        await this.usersService.updateUser(userId, {
+            coinbaseAuth: {
+                accessToken: this.encryptionService.encrypt(accessToken),
+                refreshToken: this.encryptionService.encrypt(refreshToken),
+                expires,
+            }
+        });
+    }
 };
 CoinbaseAuthService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [config_1.ConfigService, axios_1.HttpService])
+    __metadata("design:paramtypes", [config_1.ConfigService,
+        axios_1.HttpService,
+        users_service_1.UsersService,
+        encryption_service_1.EncryptionService])
 ], CoinbaseAuthService);
 exports.CoinbaseAuthService = CoinbaseAuthService;
 //# sourceMappingURL=coinbase-auth.service.js.map
