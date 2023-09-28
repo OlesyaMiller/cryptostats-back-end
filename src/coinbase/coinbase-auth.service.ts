@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { Response } from "express";
+import { Request, Response } from "express";
 import { ConfigService } from "@nestjs/config";
 import { HttpService } from "@nestjs/axios";
 import { UsersService } from "src/users/users.service";

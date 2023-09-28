@@ -9,27 +9,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserSchema = exports.User = void 0;
+exports.CoinbaseAuth = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
-const mongoose_2 = require("mongoose");
-const CoinbaseAuth_1 = require("./CoinbaseAuth");
-let User = class User extends mongoose_2.Document {
-};
+class CoinbaseAuth {
+}
 __decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
-], User.prototype, "email", void 0);
+], CoinbaseAuth.prototype, "accessToken", void 0);
 __decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
-], User.prototype, "password", void 0);
+], CoinbaseAuth.prototype, "refreshToken", void 0);
 __decorate([
     (0, mongoose_1.Prop)(),
-    __metadata("design:type", CoinbaseAuth_1.CoinbaseAuth)
-], User.prototype, "coinbaseAuth", void 0);
-User = __decorate([
-    (0, mongoose_1.Schema)({ versionKey: false })
-], User);
-exports.User = User;
-exports.UserSchema = mongoose_1.SchemaFactory.createForClass(User);
-//# sourceMappingURL=User.js.map
+    __metadata("design:type", Date)
+], CoinbaseAuth.prototype, "expires", void 0);
+exports.CoinbaseAuth = CoinbaseAuth;
+//# sourceMappingURL=CoinbaseAuth.js.map

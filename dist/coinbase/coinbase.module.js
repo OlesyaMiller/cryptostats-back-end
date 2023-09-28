@@ -11,11 +11,13 @@ const common_1 = require("@nestjs/common");
 const coinbase_controller_1 = require("./coinbase.controller");
 const coinbase_auth_service_1 = require("./coinbase-auth.service");
 const axios_1 = require("@nestjs/axios");
+const auth_module_1 = require("../auth/auth.module");
+const users_module_1 = require("../users/users.module");
 let CoinbaseModule = class CoinbaseModule {
 };
 CoinbaseModule = __decorate([
     (0, common_1.Module)({
-        imports: [axios_1.HttpModule],
+        imports: [axios_1.HttpModule, auth_module_1.AuthModule, users_module_1.UsersModule],
         controllers: [coinbase_controller_1.CoinbaseController],
         providers: [coinbase_auth_service_1.CoinbaseAuthService]
     })

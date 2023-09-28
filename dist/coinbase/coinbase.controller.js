@@ -25,6 +25,7 @@ let CoinbaseController = class CoinbaseController {
         this.coinbaseAuthService.authorize(response);
     }
     handleCallback(request, response) {
+        this.coinbaseAuthService.handleCallback(request, response);
     }
 };
 __decorate([
@@ -41,7 +42,7 @@ __decorate([
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Request, Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], CoinbaseController.prototype, "handleCallback", null);
 CoinbaseController = __decorate([
