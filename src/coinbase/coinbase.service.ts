@@ -8,4 +8,16 @@ export class CoinbaseService {
         private readonly httpService: HttpService,
         private readonly conbaseAuthService: CoinbaseAuthService
     ) {}
+
+    async gerPrimartAccountTransactions(userId: string): Promise<any> {
+
+    }
+
+    private async gerPrimartAccount(userId: string): Promise<any> {
+        try {
+            const response$ = this.httpService.get(
+                'https://api.coinbase.com/v2/accounts'
+            )
+        } catch {}
+    }
 }
