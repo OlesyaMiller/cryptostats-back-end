@@ -11,11 +11,12 @@ export class AuthController {
 
     @UseGuards(LocalAuthGuard)
     @Post('login')
-    async login(
-        @CurrentUserDecorator() user: UserResponseDto,
-        @Res({ passthrough: true }) response: Response,
-    ): Promise<void> {
-        await this.authService.login(user, response);
-        response.send(user);
+    async login(@CurrentUserDecorator() user: UserResponseDto,
+                @Res({ passthrough: true }) response: Response,
+            ): Promise<void> {
+
+                await this.authService.login(user, response);
+                response.send(user);
+                
     }
 }

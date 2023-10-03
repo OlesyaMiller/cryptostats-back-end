@@ -13,18 +13,44 @@ exports.CoinbaseService = void 0;
 const axios_1 = require("@nestjs/axios");
 const common_1 = require("@nestjs/common");
 const coinbase_auth_service_1 = require("./coinbase-auth.service");
+const rxjs_1 = require("rxjs");
 let CoinbaseService = class CoinbaseService {
-    constructor(httpService, conbaseAuthService) {
+    constructor(httpService, coinbaseAuthService) {
         this.httpService = httpService;
-        this.conbaseAuthService = conbaseAuthService;
+        this.coinbaseAuthService = coinbaseAuthService;
     }
-    async gerPrimartAccountTransactions(userId) {
+    async getPrimaryAccountTransactions(userId) {
+        const primaryAccount = await this.getPrimaryAccount(userId);
+        return this.getAccountTransactions(primaryAccount.id, userId);
     }
-    async gerPrimartAccount(userId) {
+    async getPrimaryAccount(userId) {
         try {
-            const response$ = this.httpService.get('https://api.coinbase.com/v2/accounts');
+            const response$ = this.httpService.get('https://api.coinbase.com/v2/accounts', {
+                headers: await this.getHeaders(userId),
+            });
+            const response = await (0, rxjs_1.lastValueFrom)(response$);
+            return response.data.data.find(account => account.primary);
         }
-        catch (_a) { }
+        catch (err) {
+            throw err.response.data;
+        }
+    }
+    async getAccountTransactions(accountId, userId) {
+        try {
+            const response$ = this.httpService.get(`https://api.coinbase.com/v2/accounts/${accountId}/transactions`, {
+                headers: await this.getHeaders(userId),
+            });
+            const response = await (0, rxjs_1.lastValueFrom)(response$);
+            return response.data;
+        }
+        catch (err) {
+            throw err.response.data;
+        }
+    }
+    async getHeaders(userId) {
+        return {
+            Authorization: `Bearer ${await this.coinbaseAuthService.getAccessToken(userId)}`,
+        };
     }
 };
 CoinbaseService = __decorate([
