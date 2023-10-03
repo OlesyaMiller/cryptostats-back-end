@@ -1,8 +1,8 @@
-import { Response } from "express";
+import { Request, Response } from "express";
 import { ConfigService } from "@nestjs/config";
 import { HttpService } from "@nestjs/axios";
-import { UsersService } from "src/users/users.service";
-import { EncryptionService } from "src/auth/encryption.service";
+import { UsersService } from "../users/users.service";
+import { EncryptionService } from "../auth/encryption.service";
 export declare class CoinbaseAuthService {
     private readonly configService;
     private readonly httpService;
@@ -14,4 +14,6 @@ export declare class CoinbaseAuthService {
     handleCallback(req: Request, res: Response): void;
     private getTokensFromCode;
     private updateUserCoinbaseAuth;
+    getAccessToken(userId: string): Promise<any>;
+    private refreshAccessToken;
 }
