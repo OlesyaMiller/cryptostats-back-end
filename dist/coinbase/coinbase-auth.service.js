@@ -15,6 +15,7 @@ const config_1 = require("@nestjs/config");
 const axios_1 = require("@nestjs/axios");
 const users_service_1 = require("../users/users.service");
 const encryption_service_1 = require("../auth/encryption.service");
+const rxjs_1 = require("rxjs");
 let CoinbaseAuthService = class CoinbaseAuthService {
     constructor(configService, httpService, usersService, encryptionService) {
         this.configService = configService;
@@ -61,6 +62,24 @@ let CoinbaseAuthService = class CoinbaseAuthService {
                 refreshToken: this.encryptionService.encrypt(refreshToken),
                 expires,
             }
+        });
+    }
+    async getAccessToken(userId) {
+        const coinbaseAuth = await this.usersService.getCoinbaseAuth(userId);
+        if (new Date().getTime() >= coinbaseAuth.expires.getTime()) {
+            const response$ = this.refreshAccessToken(coinbaseAuth);
+            const response = await (0, rxjs_1.lastValueFrom)(response$);
+            await this.updateUserCoinbaseAuth(response.data, userId);
+            return response.data.access_token;
+        }
+        return this.encryptionService.decrypt(coinbaseAuth.accessToken);
+    }
+    refreshAccessToken(coinbaseAuth) {
+        return this.httpService.post('https://www.coinbase.com/oauth/token', {
+            grant_type: 'refresh_token',
+            refresh_token: this.encryptionService.decrypt(coinbaseAuth.refreshToken),
+            client_id: this.configService.get('COINBASE_CLIENT_ID'),
+            client_secret: this.configService.get('COINBASE_CLIENT_SECRET')
         });
     }
 };

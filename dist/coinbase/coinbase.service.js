@@ -9,32 +9,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthService = void 0;
+exports.CoinbaseService = void 0;
+const axios_1 = require("@nestjs/axios");
 const common_1 = require("@nestjs/common");
-const config_1 = require("@nestjs/config");
-const jwt_1 = require("@nestjs/jwt");
-let AuthService = class AuthService {
-    constructor(configService, jwtService) {
-        this.configService = configService;
-        this.jwtService = jwtService;
+const coinbase_auth_service_1 = require("./coinbase-auth.service");
+let CoinbaseService = class CoinbaseService {
+    constructor(httpService, conbaseAuthService) {
+        this.httpService = httpService;
+        this.conbaseAuthService = conbaseAuthService;
     }
-    async login(user, response) {
-        const tokenPayload = {
-            userId: user._id
-        };
-        const expires = new Date();
-        expires.setSeconds(expires.getSeconds() + this.configService.get('JWT_EXPIRATION_TIME'));
-        const token = this.jwtService.sign(tokenPayload);
-        response.cookie('Authentication', token, {
-            httpOnly: true,
-            expires
-        });
+    async gerPrimartAccountTransactions(userId) {
+    }
+    async gerPrimartAccount(userId) {
+        try {
+            const response$ = this.httpService.get('https://api.coinbase.com/v2/accounts');
+        }
+        catch (_a) { }
     }
 };
-AuthService = __decorate([
+CoinbaseService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [config_1.ConfigService,
-        jwt_1.JwtService])
-], AuthService);
-exports.AuthService = AuthService;
-//# sourceMappingURL=auth.service.js.map
+    __metadata("design:paramtypes", [axios_1.HttpService,
+        coinbase_auth_service_1.CoinbaseAuthService])
+], CoinbaseService);
+exports.CoinbaseService = CoinbaseService;
+//# sourceMappingURL=coinbase.service.js.map

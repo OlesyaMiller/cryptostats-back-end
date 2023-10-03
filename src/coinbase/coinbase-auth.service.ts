@@ -2,9 +2,9 @@ import { Injectable } from "@nestjs/common";
 import { Request, Response } from "express";
 import { ConfigService } from "@nestjs/config";
 import { HttpService } from "@nestjs/axios";
-import { UsersService } from "src/users/users.service";
-import { EncryptionService } from "src/auth/encryption.service";
-import { UserResponseDto } from "src/users/dto/response/user-response.dto";
+import { UsersService } from "../users/users.service";
+import { EncryptionService } from "../auth/encryption.service";
+import { UserResponseDto } from "../users/dto/response/user-response.dto";
 import { CoinbaseAuth } from "../users/models/CoinbaseAuth";
 import { lastValueFrom } from "rxjs";
 

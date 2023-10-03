@@ -54,6 +54,16 @@ let UsersService = class UsersService {
         }
         return this.buildResponse(user);
     }
+    async getCoinbaseAuth(userId) {
+        const user = await this.usersRepository.findOneById(userId);
+        if (!user) {
+            throw new common_1.NotFoundException(`User not found by _id: '${userId}'.`);
+        }
+        if (!user.coinbaseAuth) {
+            throw new common_1.UnauthorizedException(`User with _id: '${userId}' has not authorized Coinbase.`);
+        }
+        return user.coinbaseAuth;
+    }
     buildResponse(user) {
         return {
             _id: user._id.toHexString(),
