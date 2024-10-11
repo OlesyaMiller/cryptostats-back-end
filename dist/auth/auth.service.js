@@ -19,6 +19,7 @@ let AuthService = class AuthService {
         this.jwtService = jwtService;
     }
     async login(user, response) {
+        console.log('user id:', user._id);
         const tokenPayload = {
             userId: user._id
         };

@@ -16,9 +16,11 @@ export class AuthService {
     ) {}
 
     async login(user: UserResponseDto, response: Response): Promise<void> {
+        console.log('user id:', user._id);
+        
         const tokenPayload: TokenPayload = {
             userId: user._id
-        }
+        };
 
         const expires = new Date();
         expires.setSeconds(
@@ -27,9 +29,13 @@ export class AuthService {
 
         const token = this.jwtService.sign(tokenPayload);
 
-        response.cookie('Authentication', token, {
-            httpOnly: true,
-            expires
-        })
+        response.cookie(
+            'Authentication', 
+            token, 
+            {
+                httpOnly: true,
+                expires
+            }
+        );
     }
 }
