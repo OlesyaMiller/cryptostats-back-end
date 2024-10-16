@@ -14,7 +14,6 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CoinbaseController = void 0;
 const common_1 = require("@nestjs/common");
-const common_2 = require("@nestjs/common");
 const jwt_auth_guard_1 = require("../auth/guards/jwt-auth.guard");
 const coinbase_auth_service_1 = require("./coinbase-auth.service");
 let CoinbaseController = class CoinbaseController {
