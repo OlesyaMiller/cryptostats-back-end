@@ -1,4 +1,4 @@
-export declare class CreateUserRequest {
+export interface UserRequestDto {
     email: string;
     password: string;
 }

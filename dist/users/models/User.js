@@ -15,6 +15,7 @@ const mongoose_2 = require("mongoose");
 const CoinbaseAuth_1 = require("./CoinbaseAuth");
 let User = class User extends mongoose_2.Document {
 };
+exports.User = User;
 __decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
@@ -27,9 +28,8 @@ __decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", CoinbaseAuth_1.CoinbaseAuth)
 ], User.prototype, "coinbaseAuth", void 0);
-User = __decorate([
+exports.User = User = __decorate([
     (0, mongoose_1.Schema)({ versionKey: false })
 ], User);
-exports.User = User;
 exports.UserSchema = mongoose_1.SchemaFactory.createForClass(User);
 //# sourceMappingURL=User.js.map

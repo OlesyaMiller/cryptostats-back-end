@@ -83,12 +83,12 @@ let CoinbaseAuthService = class CoinbaseAuthService {
         });
     }
 };
-CoinbaseAuthService = __decorate([
+exports.CoinbaseAuthService = CoinbaseAuthService;
+exports.CoinbaseAuthService = CoinbaseAuthService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [config_1.ConfigService,
         axios_1.HttpService,
         users_service_1.UsersService,
         encryption_service_1.EncryptionService])
 ], CoinbaseAuthService);
-exports.CoinbaseAuthService = CoinbaseAuthService;
 //# sourceMappingURL=coinbase-auth.service.js.map

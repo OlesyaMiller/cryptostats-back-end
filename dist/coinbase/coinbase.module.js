@@ -15,12 +15,12 @@ const auth_module_1 = require("../auth/auth.module");
 const users_module_1 = require("../users/users.module");
 let CoinbaseModule = class CoinbaseModule {
 };
-CoinbaseModule = __decorate([
+exports.CoinbaseModule = CoinbaseModule;
+exports.CoinbaseModule = CoinbaseModule = __decorate([
     (0, common_1.Module)({
         imports: [axios_1.HttpModule, auth_module_1.AuthModule, users_module_1.UsersModule],
         controllers: [coinbase_controller_1.CoinbaseController],
         providers: [coinbase_auth_service_1.CoinbaseAuthService]
     })
 ], CoinbaseModule);
-exports.CoinbaseModule = CoinbaseModule;
 //# sourceMappingURL=coinbase.module.js.map

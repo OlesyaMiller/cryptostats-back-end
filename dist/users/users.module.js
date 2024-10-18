@@ -8,22 +8,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersModule = void 0;
 const common_1 = require("@nestjs/common");
-const users_controller_1 = require("./users.controller");
-const users_service_1 = require("./users.service");
-const User_1 = require("./models/User");
 const mongoose_1 = require("@nestjs/mongoose");
+const User_1 = require("./models/User");
+const users_controller_1 = require("./users.controller");
 const users_repository_1 = require("./users.repository");
+const users_service_1 = require("./users.service");
 let UsersModule = class UsersModule {
 };
-UsersModule = __decorate([
+exports.UsersModule = UsersModule;
+exports.UsersModule = UsersModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            mongoose_1.MongooseModule.forFeature([{ name: User_1.User.name, schema: User_1.UserSchema }])
+            mongoose_1.MongooseModule.forFeature([{ name: User_1.User.name, schema: User_1.UserSchema }]),
         ],
         controllers: [users_controller_1.UsersController],
         providers: [users_service_1.UsersService, users_repository_1.UsersRepository],
-        exports: [users_service_1.UsersService]
+        exports: [users_service_1.UsersService],
     })
 ], UsersModule);
-exports.UsersModule = UsersModule;
 //# sourceMappingURL=users.module.js.map

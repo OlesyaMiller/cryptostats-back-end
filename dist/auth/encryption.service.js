@@ -41,9 +41,9 @@ let EncryptionService = class EncryptionService {
         return decrypted.toString();
     }
 };
-EncryptionService = __decorate([
+exports.EncryptionService = EncryptionService;
+exports.EncryptionService = EncryptionService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [config_1.ConfigService])
 ], EncryptionService);
-exports.EncryptionService = EncryptionService;
 //# sourceMappingURL=encryption.service.js.map

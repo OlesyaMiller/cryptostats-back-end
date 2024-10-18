@@ -53,10 +53,10 @@ let CoinbaseService = class CoinbaseService {
         };
     }
 };
-CoinbaseService = __decorate([
+exports.CoinbaseService = CoinbaseService;
+exports.CoinbaseService = CoinbaseService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [axios_1.HttpService,
         coinbase_auth_service_1.CoinbaseAuthService])
 ], CoinbaseService);
-exports.CoinbaseService = CoinbaseService;
 //# sourceMappingURL=coinbase.service.js.map

@@ -11,15 +11,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersService = void 0;
 const common_1 = require("@nestjs/common");
-const users_repository_1 = require("./users.repository");
 const bcrypt_1 = require("bcrypt");
+const users_repository_1 = require("./users.repository");
 let UsersService = class UsersService {
     constructor(usersRepository) {
         this.usersRepository = usersRepository;
     }
-    async createUser(userRequestDto) {
-        await this.validateCreateUserRequest(userRequestDto);
-        const user = await this.usersRepository.insertOne(Object.assign(Object.assign({}, userRequestDto), { password: await (0, bcrypt_1.hash)(userRequestDto.password, 10) }));
+    async createUser(createUserRequest) {
+        await this.validateCreateUserRequest(createUserRequest);
+        const user = await this.usersRepository.insertOne(Object.assign(Object.assign({}, createUserRequest), { password: await (0, bcrypt_1.hash)(createUserRequest.password, 10) }));
         return this.buildResponse(user);
     }
     async updateUser(userId, data) {
@@ -29,14 +29,14 @@ let UsersService = class UsersService {
         }
         return this.buildResponse(user);
     }
-    async validateCreateUserRequest(userRequestDto) {
-        const user = await this.usersRepository.findOnebyEmail(userRequestDto.email);
+    async validateCreateUserRequest(createUserRequest) {
+        const user = await this.usersRepository.findOneByEmail(createUserRequest.email);
         if (user) {
             throw new common_1.BadRequestException('This email already exists.');
         }
     }
     async validateUser(email, password) {
-        const user = await this.usersRepository.findOnebyEmail(email);
+        const user = await this.usersRepository.findOneByEmail(email);
         if (!user) {
             throw new common_1.NotFoundException(`User does not exist by email: '${email}'.`);
         }
@@ -46,7 +46,6 @@ let UsersService = class UsersService {
         }
         return this.buildResponse(user);
     }
-    ;
     async getUserById(userId) {
         const user = await this.usersRepository.findOneById(userId);
         if (!user) {
@@ -68,12 +67,13 @@ let UsersService = class UsersService {
         return {
             _id: user._id.toHexString(),
             email: user.email,
+            isCoinbaseAuthorized: !!user.coinbaseAuth,
         };
     }
 };
-UsersService = __decorate([
+exports.UsersService = UsersService;
+exports.UsersService = UsersService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [users_repository_1.UsersRepository])
 ], UsersService);
-exports.UsersService = UsersService;
 //# sourceMappingURL=users.service.js.map

@@ -19,23 +19,22 @@ let AuthService = class AuthService {
         this.jwtService = jwtService;
     }
     async login(user, response) {
-        console.log('user id:', user._id);
         const tokenPayload = {
-            userId: user._id
+            userId: user._id,
         };
         const expires = new Date();
         expires.setSeconds(expires.getSeconds() + this.configService.get('JWT_EXPIRATION_TIME'));
         const token = this.jwtService.sign(tokenPayload);
         response.cookie('Authentication', token, {
             httpOnly: true,
-            expires
+            expires,
         });
     }
 };
-AuthService = __decorate([
+exports.AuthService = AuthService;
+exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [config_1.ConfigService,
         jwt_1.JwtService])
 ], AuthService);
-exports.AuthService = AuthService;
 //# sourceMappingURL=auth.service.js.map

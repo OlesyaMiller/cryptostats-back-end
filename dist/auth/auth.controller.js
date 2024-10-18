@@ -14,9 +14,9 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
+const current_user_decorator_1 = require("./current-user.decorator");
 const auth_service_1 = require("./auth.service");
 const local_auth_guard_1 = require("./guards/local-auth.guard");
-const current_user_decorator_1 = require("../current-user.decorator");
 let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
@@ -26,18 +26,18 @@ let AuthController = class AuthController {
         response.send(user);
     }
 };
+exports.AuthController = AuthController;
 __decorate([
     (0, common_1.UseGuards)(local_auth_guard_1.LocalAuthGuard),
     (0, common_1.Post)('login'),
-    __param(0, (0, current_user_decorator_1.CurrentUserDecorator)()),
+    __param(0, (0, current_user_decorator_1.CurrentUser)()),
     __param(1, (0, common_1.Res)({ passthrough: true })),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "login", null);
-AuthController = __decorate([
+exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
 ], AuthController);
-exports.AuthController = AuthController;
 //# sourceMappingURL=auth.controller.js.map

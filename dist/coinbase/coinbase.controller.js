@@ -27,6 +27,7 @@ let CoinbaseController = class CoinbaseController {
         this.coinbaseAuthService.handleCallback(request, response);
     }
 };
+exports.CoinbaseController = CoinbaseController;
 __decorate([
     (0, common_1.Get)('auth'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
@@ -44,9 +45,8 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], CoinbaseController.prototype, "handleCallback", null);
-CoinbaseController = __decorate([
+exports.CoinbaseController = CoinbaseController = __decorate([
     (0, common_1.Controller)('coinbase'),
     __metadata("design:paramtypes", [coinbase_auth_service_1.CoinbaseAuthService])
 ], CoinbaseController);
-exports.CoinbaseController = CoinbaseController;
 //# sourceMappingURL=coinbase.controller.js.map

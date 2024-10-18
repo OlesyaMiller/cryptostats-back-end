@@ -23,9 +23,9 @@ let LocalStrategy = class LocalStrategy extends (0, passport_1.PassportStrategy)
         return this.usersService.validateUser(email, password);
     }
 };
-LocalStrategy = __decorate([
+exports.LocalStrategy = LocalStrategy;
+exports.LocalStrategy = LocalStrategy = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [users_service_1.UsersService])
 ], LocalStrategy);
-exports.LocalStrategy = LocalStrategy;
 //# sourceMappingURL=local.strategy.js.map

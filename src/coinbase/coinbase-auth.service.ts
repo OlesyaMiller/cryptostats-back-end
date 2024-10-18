@@ -4,7 +4,7 @@ import { ConfigService } from "@nestjs/config";
 import { HttpService } from "@nestjs/axios";
 import { UsersService } from "../users/users.service";
 import { EncryptionService } from "../auth/encryption.service";
-import { UserResponseDto } from "../users/dto/response/user-response.dto";
+import { UserResponse } from "../users/dto/response/user-response.dto";
 import { CoinbaseAuth } from "../users/models/CoinbaseAuth";
 import { lastValueFrom } from "rxjs";
 
@@ -39,7 +39,7 @@ export class CoinbaseAuthService {
         this.getTokensFromCode(code as string).subscribe(async tokensResponse => {
             await this.updateUserCoinbaseAuth(
                 tokensResponse.data, 
-                ((user as unknown) as UserResponseDto )._id,
+                ((user as unknown) as UserResponse )._id,
             );
             res.redirect(this.configService.get('AUTH_REDIRECT_URI'));
         });

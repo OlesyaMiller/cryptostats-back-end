@@ -9,21 +9,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CoinbaseAuth = void 0;
-const mongoose_1 = require("@nestjs/mongoose");
-class CoinbaseAuth {
+exports.CreateUserRequest = void 0;
+const class_validator_1 = require("class-validator");
+class CreateUserRequest {
 }
-exports.CoinbaseAuth = CoinbaseAuth;
 __decorate([
-    (0, mongoose_1.Prop)(),
+    (0, class_validator_1.IsEmail)(),
     __metadata("design:type", String)
-], CoinbaseAuth.prototype, "accessToken", void 0);
+], CreateUserRequest.prototype, "email", void 0);
 __decorate([
-    (0, mongoose_1.Prop)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], CoinbaseAuth.prototype, "refreshToken", void 0);
-__decorate([
-    (0, mongoose_1.Prop)(),
-    __metadata("design:type", Date)
-], CoinbaseAuth.prototype, "expires", void 0);
-//# sourceMappingURL=CoinbaseAuth.js.map
+], CreateUserRequest.prototype, "password", void 0);
+exports.CreateUserRequest = CreateUserRequest;
+//# sourceMappingURL=create-user-request.dto.js.map

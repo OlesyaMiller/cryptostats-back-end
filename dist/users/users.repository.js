@@ -15,8 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersRepository = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
-const User_1 = require("./models/User");
 const mongoose_2 = require("mongoose");
+const User_1 = require("./models/User");
 let UsersRepository = class UsersRepository {
     constructor(user) {
         this.user = user;
@@ -28,17 +28,17 @@ let UsersRepository = class UsersRepository {
     async updateOne(userId, data) {
         return this.user.findByIdAndUpdate(userId, data, { new: true });
     }
-    async findOnebyEmail(email) {
+    async findOneByEmail(email) {
         return this.user.findOne({ email });
     }
     async findOneById(userId) {
         return this.user.findById(userId);
     }
 };
-UsersRepository = __decorate([
+exports.UsersRepository = UsersRepository;
+exports.UsersRepository = UsersRepository = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(User_1.User.name)),
     __metadata("design:paramtypes", [mongoose_2.Model])
 ], UsersRepository);
-exports.UsersRepository = UsersRepository;
 //# sourceMappingURL=users.repository.js.map

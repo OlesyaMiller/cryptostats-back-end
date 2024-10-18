@@ -1,4 +1,5 @@
-export interface UserResponseDto {
-    _id: string,
-    email: string,
+export interface UserResponse {
+    _id: string;
+    email: string;
+    isCoinbaseAuthorized: boolean;
 }

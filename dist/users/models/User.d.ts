@@ -1,4 +1,3 @@
-/// <reference types="mongoose/types/PipelineStage" />
 import { Document } from 'mongoose';
 import { CoinbaseAuth } from './CoinbaseAuth';
 export declare class User extends Document {
@@ -6,4 +5,4 @@ export declare class User extends Document {
     password: string;
     coinbaseAuth?: CoinbaseAuth;
 }
-export declare const UserSchema: import("mongoose").Schema<User, import("mongoose").Model<User, any, any, any>, any, any>;
+export declare const UserSchema: import("mongoose").Schema<User, import("mongoose").Model<User, any, any, any, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, User>;
