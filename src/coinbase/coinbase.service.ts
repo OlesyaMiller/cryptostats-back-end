@@ -38,7 +38,7 @@ export class CoinbaseService {
               headers: await this.getHeaders(userId),
             },
           );
-          const response = await lastValueFrom(response$);
+          const response = await lastValueFrom(response$);  // observable 
           return response.data;
         } catch (err) {
           throw err.response.data;
