@@ -36,7 +36,7 @@ export class CoinbaseAuthService {
         const { code } = req.query;
         const { user } = req;
 
-        this.getTokensFromCode(code as string).subscribe(async tokensResponse => {
+        this.getTokensFromCode(code as string).subscribe(async tokensResponse => { // we use 'subscribe' because it's an observable
             await this.updateUserCoinbaseAuth(
                 tokensResponse.data, 
                 ((user as unknown) as UserResponse )._id,
